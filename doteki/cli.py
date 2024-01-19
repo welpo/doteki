@@ -138,7 +138,9 @@ def get_plugin_output(plugin_name: str, settings: dict[str, Any]) -> str | None:
             return format_plugin_output(plugin_output, settings)
 
     except ImportError as e:
-        logging.error(f"Missing dependency for plugin '{plugin_name}': {e}")
+        logging.error(
+            f"Missing dependency for plugin '{plugin_name}': {e}. Try running 'pip install doteki[{plugin_name}]'"
+        )
     except AttributeError:
         logging.error(f"Plugin '{plugin_name}' does not have a 'run' function")
     except Exception as e:
