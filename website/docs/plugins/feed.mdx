@@ -1,0 +1,124 @@
+# Feed Plugin
+
+Fetch and format entries from an RSS/Atom feed. Display the latest blog posts from your site, recent videos from your YouTube channel…
+
+## Dependencies
+
+To use this plugin you'll need `feedparser` and `requests`. You can install dōteki and both dependencies with:
+
+```bash
+pip install doteki[feed]
+```
+
+## Configuration
+
+The Feed plugin can be customized with several settings:
+
+- `url` (required): The URL of the RSS or Atom feed.
+- `n`: The number of feed items to display. Default: `5`.
+- `date_format`: The format for displaying dates. Default: `"%Y-%m-%d"`, which displays dates as `YYYY-MM-DD`.
+- `show_date`: A boolean to indicate whether to show the publication date of each feed item. Default: `False`.
+- `separator`: The separator character to use when displaying dates. Default: `"·"`.
+
+## Usage
+
+To use the Feed plugin, you need to provide it with a set of settings. Here's a minimal example:
+
+```toml title="doteki.toml"
+[sections.blog]
+plugin = "feed"
+url = "https://osc.garden/atom.xml"
+```
+
+This configuration will display the latest 5 items (default) from the specified feed. The plugin will display the title of each item, and link to the item's URL.
+
+## Example output
+
+Here is an example of what the output might look like:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+    - [The Festivus for the Rest of Us: Alternative Holiday Celebrations](https://example.com/the-festivus-for-the-rest-of-us)
+    - [Shades of Grey Hat: Ethics in Modern Hacking](https://example.com/shades-of-grey-hat)
+    - [Do Androids Dream? Exploring AI Consciousness](https://example.com/do-androids-dream)
+    - [The Spite Store Phenomenon: Business Ventures Fueled by Revenge](https://example.com/the-spite-store-phenomenon)
+    - [The Underground Man: Exploring Alienation in Modern Society](https://example.com/the-underground-man)
+
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+    - [The Festivus for the Rest of Us: Alternative Holiday Celebrations](https://example.com/the-festivus-for-the-rest-of-us)
+    - [Shades of Grey Hat: Ethics in Modern Hacking](https://example.com/shades-of-grey-hat)
+    - [Do Androids Dream? Exploring AI Consciousness](https://example.com/do-androids-dream)
+    - [The Spite Store Phenomenon: Business Ventures Fueled by Revenge](https://example.com/the-spite-store-phenomenon)
+    - [The Underground Man: Exploring Alienation in Modern Society](https://example.com/the-underground-man)
+    ```
+  </TabItem>
+</Tabs>
+
+## Advanced usage
+
+Here's a more advanced example:
+
+```toml title="doteki.toml"
+[sections.blog]
+plugin = "feed"
+url = "https://osc.garden/atom.xml"
+n = 3
+show_date = true
+separator = "•"
+prepend_text = "### Latest blog posts\n\n"
+append_text = "\n\nMore on [osc.garden](https://osc.garden)"
+```
+
+This configuration will display the latest 3 items from the specified Atom feed. The plugin will display the title of each item, linking to the item's URL. It will also display the publication date of each item, in the default format `YYYY-MM-DD`.
+
+The plugin will also prepend and append some text to the output.
+
+Here is an example of what the output might look like:
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+### Latest blog posts
+
+- [The 8 Most Important Statistical Ideas: Bootstrapping and Simulation-Based Inference](https://osc.garden/blog/bootstrapping-and-simulation-based-inference/) • 2023-11-27
+- [Nine Illustrated Tips to Get Started with AI Chatbots like ChatGPT](https://osc.garden/blog/beginners-guide-to-ai-chatbots/) • 2023-11-21
+- [The 8 Most Important Statistical Ideas: Counterfactual Causal Inference](https://osc.garden/blog/counterfactual-causal-inference/) • 2023-10-23
+
+More on [osc.garden](https://osc.garden)
+
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+### Latest blog posts
+
+- [The 8 Most Important Statistical Ideas: Bootstrapping and Simulation-Based Inference](https://osc.garden/blog/bootstrapping-and-simulation-based-inference/) • 2023-11-27
+- [Nine Illustrated Tips to Get Started with AI Chatbots like ChatGPT](https://osc.garden/blog/beginners-guide-to-ai-chatbots/) • 2023-11-21
+- [The 8 Most Important Statistical Ideas: Counterfactual Causal Inference](https://osc.garden/blog/counterfactual-causal-inference/) • 2023-10-23
+
+More on [osc.garden](https://osc.garden)
+    ```
+</TabItem>
+</Tabs>
+
+## Frequently Asked Questions
+
+### How do I use the Feed plugin to display the latest videos from my YouTube channel?
+
+Simply set `url` to the URL of your channel's RSS feed.
+
+The fastest way to find it is to visit the channel on your browser, examine the page's source code, and search for `application/rss+xml`. You should find a URL that looks like this:
+
+https://www.youtube.com/feeds/videos.xml?channel_id=UCdNmdUitdB28xDqrSGTnn_g
+
+With this URL, you can configure the Feed plugin as follows:
+
+```toml title="doteki.toml"
+[sections.videos]
+plugin = "feed"
+url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCdNmdUitdB28xDqrSGTnn_g"
+# Other options…
+```

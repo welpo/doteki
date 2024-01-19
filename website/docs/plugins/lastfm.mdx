@@ -1,0 +1,158 @@
+# Last.fm Plugin
+
+Showcase your musical taste by displaying your top artists, albums, tracks, or tags from Last.fm.
+
+## Dependencies
+
+To use this plugin you'll need `requests`. You can install dōteki and this dependency with:
+
+```bash
+pip install doteki[lastfm]
+```
+
+## Configuration
+
+The Last.fm plugin can be customized with these settings:
+
+- `username` (required): Your Last.fm username.
+- `type`: Type of data to display. Accepted values are "artists", "albums", "tracks", and "tags". Default: `"artists"`.
+- `n`: Number (positive integer) of items to display. Default: `1`.
+- `period`: Time period to retrieve data from. Accepted values are "overall", "7day", "1month", "3month", "6month", and "12month". Default: `"7day"`.
+- `include_links`: Whether to link to Last.fm pages on the name of artists, albums… Default: `true`.
+
+The **API key** needs to be provided through the `DOTEKI_LASTFM_API_KEY` environment variable (read [How to set environment variables](/docs/configuration/plugin-configuration#environment-variables)). Create a free Last.fm API account [here](https://www.last.fm/api/account/create).
+
+## Usage
+
+To use the Last.fm plugin, set up a section with this plugin name, your Last.fm username and optional settings:
+
+```toml title="doteki.toml"
+[sections.top_artist]
+plugin = "lastfm"
+username = "your_lastfm_username"
+```
+
+This configuration will return your most-listened artist from the last seven days.
+
+## Examples
+
+### Top 3 artists of the last month
+
+```toml title="doteki.toml"
+[sections.lastfm]
+plugin = "lastfm"
+type = "artists"  # Default value.
+username = "your_lastfm_username"
+n = 3
+period = "1month"
+preset = "numbered_list"
+```
+
+This configuration will display your top 3 artists from the last month, each as an item in a numbered list, like this:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+    1. [Arthur Rubinstein](https://www.last.fm/music/Arthur+Rubinstein)
+    2. [Yeat](https://www.last.fm/music/Yeat)
+    3. [Caroline Polachek](https://www.last.fm/music/Caroline+Polachek)
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+    1. [Arthur Rubinstein](https://www.last.fm/music/Arthur+Rubinstein)
+    2. [Yeat](https://www.last.fm/music/Yeat)
+    3. [Caroline Polachek](https://www.last.fm/music/Caroline+Polachek)
+    ```
+  </TabItem>
+</Tabs>
+
+### Top 3 all-time songs
+
+```toml title="doteki.toml"
+
+[sections.lastfm]
+plugin = "lastfm"
+type = "tracks"
+username = "your_lastfm_username"
+n = 3
+period = "12month"
+preset = "comma_and"
+inline = true
+```
+
+```md title="README.md"
+The three tracks I've listened to the most this year are <!-- lastfm start --><!-- lastfm end -->.
+```
+
+This configuration will display your all-time top 3 songs:
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+    The three tracks I've listened to the most this year are [Matt Maltese](https://www.last.fm/music/Matt+Maltese) - [Widows](https://www.last.fm/music/Matt+Maltese/_/Widows), [yeule](https://www.last.fm/music/yeule) - [cyber meat](https://www.last.fm/music/yeule/_/cyber+meat), and [Indigo De Souza](https://www.last.fm/music/Indigo+De+Souza) - [You Can Be Mean](https://www.last.fm/music/Indigo+De+Souza/_/You+Can+Be+Mean).
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+    The three tracks I've listened to the most this year are [Matt Maltese](https://www.last.fm/music/Matt+Maltese) - [Widows](https://www.last.fm/music/Matt+Maltese/_/Widows), [yeule](https://www.last.fm/music/yeule) - [cyber meat](https://www.last.fm/music/yeule/_/cyber+meat), and [Indigo De Souza](https://www.last.fm/music/Indigo+De+Souza) - [You Can Be Mean](https://www.last.fm/music/Indigo+De+Souza/_/You+Can+Be+Mean).
+    ```
+  </TabItem>
+</Tabs>
+
+### Top 3 albums of the month without links
+
+```toml title="doteki.toml"
+[sections.lastfm]
+plugin = "lastfm"
+username = "your_lastfm_username"
+type = "albums"
+n = 3
+period = "1month"
+include_links = false
+```
+
+This configuration will display your top 3 albums from the last month, each as an item in a Markdown list, without links:
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+    - Deafheaven - Sunbather (10th Anniversary Remix / Remaster)
+    - Jónsi & Alex - Riceboy Sleeps
+    - Dedekind Cut - Tahoe
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+    - Deafheaven - Sunbather (10th Anniversary Remix / Remaster)
+    - Jónsi & Alex - Riceboy Sleeps
+    - Dedekind Cut - Tahoe
+    ```
+  </TabItem>
+</Tabs>
+
+### Most listened track of the week
+
+```toml title="doteki.toml"
+[sections.lastfm]
+plugin = "lastfm"
+username = "your_lastfm_username"
+type = "tracks"
+n = 1
+period = "7day"
+inline = true
+```
+
+```md title="README.md"
+I've been listening to <!-- lastfm start --><!-- lastfm end --> on repeat.
+```
+
+After running dōteki, you'll get:
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+    I've been listening to [Arthur Rubinstein](https://www.last.fm/music/Arthur+Rubinstein) - [Nocturnes, Op. 9: No. 1 in B-Flat Minor](https://www.last.fm/music/Arthur+Rubinstein/_/Nocturnes,+Op.+9:+No.+1+in+B-Flat+Minor) on repeat.
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+    ```md
+    I've been listening to [Arthur Rubinstein](https://www.last.fm/music/Arthur+Rubinstein) - [Nocturnes, Op. 9: No. 1 in B-Flat Minor](https://www.last.fm/music/Arthur+Rubinstein/_/Nocturnes,+Op.+9:+No.+1+in+B-Flat+Minor) on repeat.
+    ```
+  </TabItem>
+</Tabs>

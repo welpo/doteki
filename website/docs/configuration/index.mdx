@@ -1,0 +1,122 @@
+---
+sidebar_position: 3
+---
+
+# Configuration
+
+dōteki uses [TOML](https://github.com/toml-lang/toml) for the configuration file.
+
+The configuration file `doteki.toml` is read from the current directory by default. You can specify a different path with the `--config | -c` option.
+
+While setting up your configuration file, you must pay attention to the TOML sections. A TOML section starts with a header (e.g. `[sections.last_updated]`) and ends with the next header or the end of the file.
+
+Read more about [plugin configuration](/docs/configuration/plugin-configuration) or the [main application configuration](/docs/configuration/general-configuration) options.
+
+## Example
+
+Here's an example `doteki.toml` configuration using the [Last.fm](/docs/plugins/lastfm), [Feed](/docs/plugins/feed), and [Random Choice](/docs/plugins/random_choice) plugins:
+
+```toml title="doteki.toml"
+[sections.lastfm]
+plugin = "lastfm"
+username = "username"
+n = 1
+period = "7day"
+inline = true
+
+[sections.blog]
+plugin = "feed"
+url = "https://osc.garden/atom.xml"
+n = 5
+show_date = false
+prepend_text = "## Latest blog posts\n\n"
+append_text = "\n\nMore on [osc.garden](https://osc.garden)"
+
+[sections.garden]
+plugin = "random_choice"
+options = [
+    "🌲", "🌳", "🌴", "🌱", "🍃", "🍂", "🌿",
+    "🪻", "🍄", "🌷", "🌻", "🌺", "🎋", "☘️"
+]
+n = 10
+with_replacement = true
+preset = "glue"
+
+[sections.last_updated]
+plugin = "current_date"
+inline = true
+format = "%A, %d %B %Y"
+```
+
+and the matching `README.md`:
+
+```md title="README.md"
+🎶 Lately I've been listening to <!-- lastfm start --><!-- lastfm end -->.
+
+<!-- blog start -->
+<!-- blog end -->
+
+
+Check out my virtual garden:
+<!-- garden start -->
+<!-- garden end -->
+
+<sub>Last updated on <!-- last_updated start --><!-- last_updated end -->.</sub>
+```
+
+### Output
+
+After running dōteki, the `README.md` would look like:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="output-type">
+  <TabItem value="Rendered Markdown" label="Rendered Markdown" default>
+🎶 Lately I've been listening to <!-- lastfm start -->[Pablo Casals](https://www.last.fm/music/Pablo+Casals)<!-- lastfm end -->.
+
+<!-- blog start -->
+### Latest blog posts
+
+- [Self-Hosting GoatCounter with an nginx Reverse Proxy and SSL](https://osc.garden/blog/self-hosting-goatcounter/)
+- [The 8 Most Important Statistical Ideas: Bootstrapping and Simulation-Based Inference](https://osc.garden/blog/bootstrapping-and-simulation-based-inference/)
+- [Nine Illustrated Tips to Get Started with AI Chatbots like ChatGPT](https://osc.garden/blog/beginners-guide-to-ai-chatbots/)
+- [The 8 Most Important Statistical Ideas: Counterfactual Causal Inference](https://osc.garden/blog/counterfactual-causal-inference/)
+- [From Text to Texture: Transforming My Favourite Quotes into Generative Art](https://osc.garden/blog/transforming-quotes-into-generative-art/)
+
+More on [osc.garden](https://osc.garden)
+<!-- blog end -->
+
+Check out my virtual garden:
+<!-- garden start -->
+🌻🍃🌴🌲🪻🌷🍄🌴🍄☘️
+<!-- garden end -->
+
+<sub>Last updated on <!-- last_updated start -->Wednesday, 9 February 1881<!-- last_updated end -->.</sub>
+
+  </TabItem>
+  <TabItem value="Raw output" label="Raw output">
+```md
+🎶 Lately I've been listening to <!-- lastfm start -->[Pablo Casals](https://www.last.fm/music/Pablo+Casals)<!-- lastfm end -->.
+
+<!-- blog start -->
+### Latest blog posts
+
+- [Self-Hosting GoatCounter with an nginx Reverse Proxy and SSL](https://osc.garden/blog/self-hosting-goatcounter/)
+- [The 8 Most Important Statistical Ideas: Bootstrapping and Simulation-Based Inference](https://osc.garden/blog/bootstrapping-and-simulation-based-inference/)
+- [Nine Illustrated Tips to Get Started with AI Chatbots like ChatGPT](https://osc.garden/blog/beginners-guide-to-ai-chatbots/)
+- [The 8 Most Important Statistical Ideas: Counterfactual Causal Inference](https://osc.garden/blog/counterfactual-causal-inference/)
+- [From Text to Texture: Transforming My Favourite Quotes into Generative Art](https://osc.garden/blog/transforming-quotes-into-generative-art/)
+
+More on [osc.garden](https://osc.garden)
+<!-- blog end -->
+
+Check out my virtual garden:
+<!-- garden start -->
+🌻🍃🌴🌲🪻🌷🍄🌴🍄☘️
+<!-- garden end -->
+
+<sub>Last updated on <!-- last_updated start -->Wednesday, 9 February 1881<!-- last_updated end -->.</sub>
+```
+  </TabItem>
+</Tabs>
