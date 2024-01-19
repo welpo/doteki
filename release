@@ -22,6 +22,10 @@ else
     fi
 fi
 
+echo "Preparing release $VERSION_TAG…"
+echo
+poetry --quiet version "${VERSION_TAG#v}"
+
 # Update CHANGELOG.
 git cliff --tag "$VERSION_TAG" -o CHANGELOG.md
 
@@ -132,3 +136,6 @@ else
 fi
 
 echo "${https_url}/tags"
+
+echo "To publish on PyPI, run:"
+echo "poetry publish --build"
