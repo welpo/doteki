@@ -8,7 +8,7 @@ import ThemeAwareImage from "@site/src/components/ThemeAwareImage";
 
 Let's set up a GitHub profile with dynamic content using **dōteki** in less than 5 minutes.
 
-## Initial Setup
+## Initial setup
 
 First, [create a new public repository](https://github.com/new) with a name that matches your GitHub username:
 
@@ -81,11 +81,11 @@ After pushing the changes to GitHub, your profile would look like this:
   alt="GitHub profile showing the latest blog posts and the current date"
 />
 
-## Automating the Process
+## Automating the process
 
 Whether you want to do this on a schedule or on every push to a repository, there are a few ways to automate the process.
 
-### GitHub Action
+### GitHub action
 
 The simplest way to run dōteki automatically is to use the [GitHub Action](https://github.com/welpo/doteki-action).
 
@@ -116,7 +116,7 @@ This will update your profile every hour at XX:51, whenever you push to the repo
 
 For more information, see the [`doteki-action` README](https://github.com/welpo/doteki-action).
 
-### Cron Jobs
+### Cron job
 
 You can configure a cron job to run dōteki locally on a schedule and push the commit.
 
@@ -140,7 +140,7 @@ If you want to update your profile on every push to a repository (say, your blog
 
 This is a bit more involved, but if you're already using a webhook for building your site (here's a [guide for Zola and GitHub](https://osc.garden/blog/updating-site-with-webhook/)), you can just add dōteki at the end of the build process.
 
-## Further Reading
+## Further reading
 
 Check out the [list of plugins](/docs/category/plugins) to see what you can do with dōteki.
 

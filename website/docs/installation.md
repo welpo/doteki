@@ -28,7 +28,7 @@ You can select specific plugins to install by replacing `all` with a space-separ
 pip install doteki[lastfm,feed]
 ```
 
-## From Source
+## From source
 
 You can use `pip` to install the development version from GitHub:
 
