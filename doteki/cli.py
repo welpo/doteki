@@ -211,7 +211,7 @@ def replace_section_content(
 
 def write_file_content(filepath: str, content: str) -> None:
     try:
-        with open(filepath, "w") as file:
+        with open(filepath, "w", encoding="utf-8") as file:
             file.write(content)
     except IOError as e:
         logging.error(f"An error occurred while writing to {filepath}: {e}")
