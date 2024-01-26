@@ -4,6 +4,12 @@ Welcome to the changelog for dōteki. This document aims to provide a comprehens
 
 We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.MINOR.PATCH. Major version changes involve significant (breaking) changes, minor versions introduce features and improvements in a backward compatible manner, and patch versions are for bug fixes and minor tweaks.
 
+## [0.0.2](https://github.com/welpo/doteki/compare/v0.0.1..v0.0.2) - 2024-01-26
+
+### 🐛 Bug Fixes
+
+- Add utf-8 encoding to file write operations - ([17a8584](https://github.com/welpo/doteki/commit/17a8584822c1cedaa38f6897eefebca70d7f6039))
+
 ## 0.0.1 - 2024-01-19
 
 ### ✨ Features

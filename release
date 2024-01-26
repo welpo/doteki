@@ -22,7 +22,7 @@ else
     fi
 fi
 
-echo "Preparing release $VERSION_TAG…"
+echo "Preparing release ${VERSION_TAG}…"
 echo
 poetry --quiet version "${VERSION_TAG#v}"
 
