@@ -8,6 +8,10 @@ Plugins are the building blocks of dōteki. They are standalone Python modules t
 
 What kind of data? Anything you'd like to showcase on your GitHub profile. Take a look at the [available plugins](/docs/category/plugins/) to see some examples.
 
+:::tip
+Before you start developing a plugin, [set up your development environment](/docs/developer-guide/).
+:::
+
 ## General recommendations
 
 - Set **sane defaults** for settings that allow it. For example, the `current_date` plugin uses the ISO standard (`"%Y-%m-%d"`) as the default `format`.
@@ -51,7 +55,11 @@ The `run` function accepts a single argument: a dictionary containing the settin
 
 The `run` function can return a single item or a list of items. These items will be rendered as strings. The main application will format the list.
 
-In case of an error, the plugin must return `None` so dōteki skips the section. **Note**: Return an empty string to render an empty section.
+In case of an error, the plugin must return `None` so dōteki skips the section.
+
+:::tip
+To render an empty section, return an empty string.
+:::
 
 ### Other functions
 
