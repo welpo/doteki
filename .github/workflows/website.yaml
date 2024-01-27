@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - '.website/**'
+      - 'website/**'
   pull_request:
     branches:
       - main
     paths:
-      - '.website/**'
+      - 'website/**'
   workflow_dispatch:
 
 permissions:
