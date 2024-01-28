@@ -20,9 +20,9 @@ def main() -> None:
         level=logging.INFO, format="[dōteki] %(levelname)s: %(message)s"
     )
     exit_if_file_missing(args.input)
-    config = load_config(args.config)
-    process_sections(config, args.input)
-    insert_credits(config, args.input)
+    global_config = load_config(args.config)
+    process_sections(global_config, args.input)
+    insert_credits(global_config, args.input)
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -75,10 +75,10 @@ def load_config(config_path: str) -> dict[str, Any]:
         sys.exit(1)
 
 
-def process_sections(config: dict[str, Any], readme_path: str) -> None:
-    for section, section_settings in config["sections"].items():
-        section_context = SectionContext(section, section_settings, config, readme_path)
-        update_section(section_context)
+def process_sections(global_config: dict[str, Any], readme_path: str) -> None:
+    for section, section_settings in global_config["sections"].items():
+        section_context = SectionContext(section, section_settings, readme_path)
+        update_readme_content(section_context, global_config)
 
 
 class SectionContext:
@@ -86,23 +86,16 @@ class SectionContext:
         self,
         name: str,
         settings: dict[str, Any],
-        config: dict[str, Any],
         readme_path: str,
     ):
         self.name: str = name
         self.settings: dict[str, Any] = settings
-        self.config: dict[str, Any] = config
         self.readme_path: str = readme_path
 
 
-def update_section(section_context: SectionContext) -> None:
-    if not section_context.settings.get("plugin"):
-        logging.error(f"No plugin specified for section '{section_context.name}'")
-        return
-    update_readme_content(section_context)
-
-
-def update_readme_content(section_context: SectionContext) -> None:
+def update_readme_content(
+    section_context: SectionContext, global_config: dict[str, Any]
+) -> None:
     section = section_context.name
     plugin_name = section_context.settings.get("plugin")
     if not plugin_name:
@@ -110,7 +103,7 @@ def update_readme_content(section_context: SectionContext) -> None:
         return
     inline = section_context.settings.get("inline", False)
     readme_content = read_file_content(section_context.readme_path)
-    marker_format = section_context.config.get("marker_format", DEFAULT_MARKER_FORMAT)
+    marker_format = global_config.get("marker_format", DEFAULT_MARKER_FORMAT)
     section_indices = find_section_indices(readme_content, section, marker_format)
 
     for start_index, end_index in reversed(section_indices):
@@ -252,8 +245,8 @@ def write_file_content(filepath: str, content: str) -> None:
         logging.error(f"An error occurred while writing to {filepath}: {e}")
 
 
-def insert_credits(config: dict[str, Any], readme_path: str) -> None:
-    credits = config.get("credits", DEFAULT_CREDITS)
+def insert_credits(global_config: dict[str, Any], readme_path: str) -> None:
+    credits = global_config.get("credits", DEFAULT_CREDITS)
     readme_content = read_file_content(readme_path)
     if credits in read_file_content(readme_path):
         return

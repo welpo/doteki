@@ -17,7 +17,6 @@ from doteki.cli import (
     read_file_content,
     replace_section_content,
     update_readme_content,
-    update_section,
     write_file_content,
 )
 
@@ -82,9 +81,10 @@ def test_load_valid_config_adds_credits():
 
 
 def test_update_readme_no_plugin_specified(caplog):
-    section_context = SectionContext("test_section", {}, {}, "README.md")
+    section_context = SectionContext("test_section", {}, "README.md")
+    global_config = {}
     with caplog.at_level(logging.ERROR):
-        update_readme_content(section_context)
+        update_readme_content(section_context, global_config)
     assert "No plugin specified for section 'test_section'" in caplog.text
 
 
@@ -95,14 +95,13 @@ def readme_file(tmp_path):
     return readme_path
 
 
-def test_update_section_no_plugin_specified(caplog):
+def test_update_readme_content_no_plugin_specified(caplog):
     section_context = SectionContext(
-        name="test_section", settings={}, config={}, readme_path="README.md"
+        name="test_section", settings={}, readme_path="README.md"
     )
-
+    global_config = {}
     with caplog.at_level(logging.ERROR):
-        update_section(section_context)
-
+        update_readme_content(section_context, global_config)
     assert "No plugin specified for section 'test_section'" in caplog.text
 
 
@@ -110,9 +109,10 @@ def test_update_section_no_plugin_specified(caplog):
 def test_readme_content_read(mock_read_file_content, readme_file):
     mock_read_file_content.return_value = readme_file.read_text(encoding="utf-8")
     section_context = SectionContext(
-        "test_section", {"plugin": "test_plugin"}, {}, str(readme_file)
+        "test_section", {"plugin": "test_plugin"}, str(readme_file)
     )
-    update_readme_content(section_context)
+    global_config = {}
+    update_readme_content(section_context, global_config)
     mock_read_file_content.assert_called_once_with(str(readme_file))
 
 
@@ -157,10 +157,11 @@ def test_handle_none_plugin_output(
 ):
     mock_read_file_content.return_value = readme_file.read_text(encoding="utf-8")
     section_context = SectionContext(
-        "test_section", {"plugin": "test_plugin"}, {}, str(readme_file)
+        "test_section", {"plugin": "test_plugin"}, str(readme_file)
     )
+    global_config = {}
     with caplog.at_level(logging.ERROR):
-        update_readme_content(section_context)
+        update_readme_content(section_context, global_config)
     assert (
         "No content returned by plugin 'test_plugin' for section 'test_section'"
         in caplog.text
