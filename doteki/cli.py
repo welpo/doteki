@@ -7,6 +7,7 @@ import re
 import sys
 import tomllib
 from typing import Any
+from importlib.metadata import version
 
 
 DEFAULT_CREDITS = '<a href="https://doteki.org"><img src="https://img.shields.io/badge/powered_by-d%C5%8Dteki-0?style=flat-square&labelColor=202b2d&color=5E936C" align="right" alt="Powered by dōteki"></a>'
@@ -34,7 +35,14 @@ def parse_arguments() -> argparse.Namespace:
         "-h",
         "--help",
         action="help",
-        help="Show this help message and exit.",
+        help="Print help",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=version("doteki"),
+        help="Print version",
     )
     parser.add_argument(
         "-c",
