@@ -24,6 +24,33 @@ def main() -> None:
     insert_credits(config, args.input)
 
 
+def parse_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="dōteki: A tool to update README sections with plugins defined in a TOML configuration",
+        add_help=False,
+        epilog="Example: doteki -c config.toml -i README.md",
+    )
+    parser.add_argument(
+        "-h",
+        "--help",
+        action="help",
+        help="Show this help message and exit.",
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        default="doteki.toml",
+        help="Path to the TOML configuration file. Default: doteki.toml",
+    )
+    parser.add_argument(
+        "-i",
+        "--input",
+        default="README.md",
+        help="Path to the README file. Default: README.md",
+    )
+    return parser.parse_args()
+
+
 def exit_if_file_missing(file_path: str) -> None:
     if not os.path.exists(file_path):
         logging.error(f"File not found: {file_path}")
@@ -215,34 +242,6 @@ def write_file_content(filepath: str, content: str) -> None:
             file.write(content)
     except IOError as e:
         logging.error(f"An error occurred while writing to {filepath}: {e}")
-
-
-def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="dōteki: A tool to update README sections with plugins defined in a TOML configuration",
-        add_help=False,
-        epilog="Example: doteki -c config.toml -i README.md",
-    )
-    parser.add_argument(
-        "-h",
-        "--help",
-        action="help",
-        default=argparse.SUPPRESS,
-        help="Show this help message and exit.",
-    )
-    parser.add_argument(
-        "-c",
-        "--config",
-        default="doteki.toml",
-        help="Path to the TOML configuration file. Default: doteki.toml",
-    )
-    parser.add_argument(
-        "-i",
-        "--input",
-        default="README.md",
-        help="Path to the README file. Default: README.md",
-    )
-    return parser.parse_args()
 
 
 def insert_credits(config: dict[str, Any], readme_path: str) -> None:
