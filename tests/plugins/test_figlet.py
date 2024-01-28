@@ -86,8 +86,14 @@ def test_figlet_bad_font():
     result = run(settings)
     assert result is None
 
-# Bold parameter
-def test_figlet_bold():
+# Bold parameter error
+def test_figlet_bold_bad_type():
     settings = {PARAM_BOLD: 'not boolean'}
     result = run(settings)
     assert result is None
+
+# Bold parameter
+def test_figlet_bold():
+    settings = {PARAM_BOLD: True, PARAM_TEXT: 'test'}
+    result = run(settings)
+    assert "<b>" in result and "</b>" in result

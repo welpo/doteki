@@ -54,11 +54,7 @@ def run(settings: dict[str, Any]) -> str | None:
 
     # Optional: bolder chars
     if settings.get(PARAM_BOLD, False) == True:
-        result = (
-            "<b>\n" 
-            + result 
-            + "\n</b>\n"
-        )
+        result = "<b>\n" + result + "\n</b>\n"
 
     return result  # type: ignore
 
@@ -98,6 +94,7 @@ def default_ascii_message() -> str:
 plugin = "figlet"
 font = "digital"
 ascii_text = "&lt;Your text here&gt;"
+bold = true
 </pre>
 
 ### Optional fonts listing
