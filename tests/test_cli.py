@@ -91,7 +91,7 @@ def test_update_readme_no_plugin_specified(caplog):
 @pytest.fixture
 def readme_file(tmp_path):
     readme_path = tmp_path / "README.md"
-    readme_path.write_text("Sample README content")
+    readme_path.write_text("Sample README content", encoding="utf-8")
     return readme_path
 
 
@@ -108,7 +108,7 @@ def test_update_section_no_plugin_specified(caplog):
 
 @patch("doteki.cli.read_file_content")
 def test_readme_content_read(mock_read_file_content, readme_file):
-    mock_read_file_content.return_value = readme_file.read_text()
+    mock_read_file_content.return_value = readme_file.read_text(encoding="utf-8")
     section_context = SectionContext(
         "test_section", {"plugin": "test_plugin"}, {}, str(readme_file)
     )
@@ -155,7 +155,7 @@ def test_handle_none_plugin_output(
     caplog,
     readme_file,
 ):
-    mock_read_file_content.return_value = readme_file.read_text()
+    mock_read_file_content.return_value = readme_file.read_text(encoding="utf-8")
     section_context = SectionContext(
         "test_section", {"plugin": "test_plugin"}, {}, str(readme_file)
     )
@@ -311,14 +311,17 @@ def test_write_file_content_ioerror(caplog):
 def test_main_functionality_inline(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
-    readme_file.write_text("<!-- mock start -->Old Content<!-- mock end -->")
+    readme_file.write_text(
+        "<!-- mock start -->Old Content<!-- mock end -->", encoding="utf-8"
+    )
     config_file.write_text(
         """
     [sections]
     [sections.mock]
     plugin = "current_date"
     inline = true
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
@@ -327,7 +330,7 @@ def test_main_functionality_inline(tmp_path):
         with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
             main()
 
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert "Old Content" not in updated_readme
             assert "<!-- mock start -->2053-12-31<!-- mock end -->" in updated_readme
 
@@ -335,21 +338,24 @@ def test_main_functionality_inline(tmp_path):
 def test_main_functionality_custom_marker_format(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
-    readme_file.write_text("<!-- [mock:start] -->Old Content<!-- [mock:end] -->")
+    readme_file.write_text(
+        "<!-- [mock:start] -->Old Content<!-- [mock:end] -->", encoding="utf-8"
+    )
     config_file.write_text(
         """
     marker_format = "<!-- [{name}:{position}] -->"
     [sections]
     [sections.mock]
     plugin = "current_date"
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
     with patch.object(sys, "argv", test_args):
         with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
             main()
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert "Old Content" not in updated_readme
             assert (
                 "<!-- [mock:start] -->\n2053-12-31\n<!-- [mock:end] -->"
@@ -360,7 +366,7 @@ def test_main_functionality_custom_marker_format(tmp_path):
 def test_main_functionality_list(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
-    readme_file.write_text("<!-- lastfm start --><!-- lastfm end -->")
+    readme_file.write_text("<!-- lastfm start --><!-- lastfm end -->", encoding="utf-8")
     config_file.write_text(
         """
     [sections]
@@ -368,7 +374,8 @@ def test_main_functionality_list(tmp_path):
     plugin = "lastfm"
     inline = false
     n = 3
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
@@ -383,7 +390,7 @@ def test_main_functionality_list(tmp_path):
         ):
             main()
 
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert "Old Content" not in updated_readme
             assert (
                 "<!-- lastfm start -->\n- [Yeat](https://www.last.fm/music/Yeat)\n- [Caroline Polachek](https://www.last.fm/music/Caroline+Polachek)\n- [Arthur Rubinstein](https://www.last.fm/music/Arthur+Rubinstein)\n<!-- lastfm end -->"
@@ -394,21 +401,24 @@ def test_main_functionality_list(tmp_path):
 def test_main_add_credits(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
-    readme_file.write_text("<!-- mock start -->Old Content<!-- mock end -->")
+    readme_file.write_text(
+        "<!-- mock start -->Old Content<!-- mock end -->", encoding="utf-8"
+    )
     config_file.write_text(
         """
     [sections]
     [sections.mock]
     plugin = "current_date"
     inline = true
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
     with patch.object(sys, "argv", test_args):
         with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
             main()
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert "Old Content" not in updated_readme
             assert "<!-- mock start -->2053-12-31<!-- mock end -->" in updated_readme
             assert DEFAULT_CREDITS in updated_readme
@@ -418,7 +428,7 @@ def test_main_dont_add_existing_credits(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
     original_readme = "<!-- mock start -->2053-12-31<!-- mock end -->\nPowered by [doteki](https://doteki.org)"
-    readme_file.write_text(original_readme)
+    readme_file.write_text(original_readme, encoding="utf-8")
     config_file.write_text(
         """
     credits = "Powered by [doteki](https://doteki.org)"
@@ -426,14 +436,15 @@ def test_main_dont_add_existing_credits(tmp_path):
     [sections.mock]
     plugin = "current_date"
     inline = true
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
     with patch.object(sys, "argv", test_args):
         with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
             main()
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert updated_readme == original_readme
 
 
@@ -441,7 +452,7 @@ def test_main_disabled_credits(tmp_path):
     readme_file = tmp_path / "README.md"
     config_file = tmp_path / "config.toml"
     original_readme = "<!-- mock start -->2053-12-31<!-- mock end -->"
-    readme_file.write_text(original_readme)
+    readme_file.write_text(original_readme, encoding="utf-8")
     config_file.write_text(
         """
     credits = ""
@@ -449,12 +460,13 @@ def test_main_disabled_credits(tmp_path):
     [sections.mock]
     plugin = "current_date"
     inline = true
-    """
+    """,
+        encoding="utf-8",
     )
 
     test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
     with patch.object(sys, "argv", test_args):
         with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
             main()
-            updated_readme = readme_file.read_text()
+            updated_readme = readme_file.read_text(encoding="utf-8")
             assert updated_readme == original_readme
