@@ -1,13 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "default:automergeMinor"],
+  "extends": ["config:recommended", ":automergeMinor"],
   "commitMessageAction": "chore(deps): update",
-  "default": {
-    "major": {
-      "automerge": false
-    },
-    "commitMessagePrefix": "⬆️"
-  },
+  "commitMessagePrefix": "⬆️",
   "packageRules": [
     {
       "updateTypes": ["pin"],
