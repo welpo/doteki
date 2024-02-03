@@ -7,7 +7,7 @@
         <img src="https://img.shields.io/badge/code_style-black-000000?style=flat-square&labelColor=202b2d&color=black" alt="Code style: black"></a>
     <a href="https://pypi.org/project/doteki/"><img src="https://img.shields.io/pypi/v/doteki?style=flat-square&labelColor=202b2d&color=5E936C" alt="PyPI version"></a>
     <a href="https://codecov.io/gh/welpo/doteki">
-        <img src="https://img.shields.io/codecov/c/gh/welpo/doteki?style=flat-square&logo=codecov&logoColor=white&labelColor=202b2d&color=5E936C" alt="Codecov"></a>
+        <img src="https://img.shields.io/codecov/c/gh/welpo/doteki?style=flat-square&labelColor=202b2d&color=5E936C" alt="Codecov"></a>
     <br>
     <a href="https://doteki.org/docs">
         <img src="https://img.shields.io/website?url=https%3A%2F%2Fdoteki.org&style=flat-square&label=docs&labelColor=202b2d&color=5E936C" alt="Documentation"></a>
