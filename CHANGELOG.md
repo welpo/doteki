@@ -4,6 +4,26 @@ Welcome to the changelog for dōteki. This document aims to provide a comprehens
 
 We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.MINOR.PATCH. Major version changes involve significant (breaking) changes, minor versions introduce features and improvements in a backward compatible manner, and patch versions are for bug fixes and minor tweaks.
 
+## [0.0.3](https://github.com/welpo/doteki/compare/v0.0.2..v0.0.3) - 2024-02-06
+
+### ✨ Features
+
+- Add -v | --version argument - ([941c2fd](https://github.com/welpo/doteki/commit/941c2fd7057792cdca5a6d088bb720b8b523d179))
+
+### 🐛 Bug Fixes
+
+- *(test_cli)* Read/write using UTF-8 encoding - ([24c4756](https://github.com/welpo/doteki/commit/24c4756f6f388550627f2909af6caea3e762b68b))
+- Specify UTF-8 encoding when reading files - ([1ae728c](https://github.com/welpo/doteki/commit/1ae728c38920cb5d205306133a20b1893ba60c56))
+
+### 📝 Documentation
+
+- *(contributing)* Enrich PR information - ([917bf4d](https://github.com/welpo/doteki/commit/917bf4d559d5515978aa4734aaad30f97c3e71bc))
+- *(plugin-standard)* Add link to developer guide - ([f7310ee](https://github.com/welpo/doteki/commit/f7310ee7e7985ea39868d08a6e8614fc213082da))
+
+### ♻️ Refactor
+
+- *(cli)* Improve code readability - ([915f02e](https://github.com/welpo/doteki/commit/915f02ebd81d4dc152585251519ed8a55afeb287))
+
 ## [0.0.2](https://github.com/welpo/doteki/compare/v0.0.1..v0.0.2) - 2024-01-26
 
 ### 🐛 Bug Fixes
