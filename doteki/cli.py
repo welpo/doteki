@@ -124,7 +124,7 @@ def update_readme_content(
 
 def read_file_content(filepath: str) -> str:
     try:
-        with open(filepath, "r") as file:
+        with open(filepath, "r", encoding="utf-8") as file:
             return file.read()
     except IOError as e:
         logging.error(f"An error occurred while reading {filepath}: {e}")
