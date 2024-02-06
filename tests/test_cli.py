@@ -1,7 +1,9 @@
-import sys
-import pytest
 import logging
-from unittest.mock import Mock, patch, mock_open
+import sys
+from unittest.mock import Mock, mock_open, patch
+
+import pytest
+
 from doteki.cli import (
     DEFAULT_CREDITS,
     SectionContext,

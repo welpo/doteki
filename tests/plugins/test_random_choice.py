@@ -1,7 +1,6 @@
-import logging
 import pytest
-from unittest.mock import patch, MagicMock
-from doteki.plugins.random_choice import run, validate_settings
+
+from doteki.plugins.random_choice import run
 
 
 def test_run():

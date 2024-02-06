@@ -1,8 +1,9 @@
 import logging
-import feedparser
-import requests
 from datetime import datetime
 from typing import Any
+
+import feedparser
+import requests
 
 DEFAULT_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_N = 5

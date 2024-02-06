@@ -1,9 +1,11 @@
 import json
 import logging
 import os
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
 import requests
-from unittest.mock import Mock, MagicMock, patch
+
 from doteki.plugins.lastfm import (
     format_item,
     run,

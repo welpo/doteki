@@ -1,7 +1,9 @@
 import logging
+from unittest.mock import MagicMock, patch
+
 import pytest
 import requests
-from unittest.mock import patch, MagicMock
+
 from doteki.plugins.feed import run, validate_settings
 
 MOCK_YOUTUBE_FEED_XML = """<?xml version="1.0" encoding="UTF-8"?>

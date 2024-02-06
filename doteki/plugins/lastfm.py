@@ -1,8 +1,9 @@
 import logging
 import os
 import re
-import requests
 from typing import Any
+
+import requests
 
 DEFAULT_DATA_TYPE = "artists"
 DEFAULT_INCLUDE_LINKS = True
