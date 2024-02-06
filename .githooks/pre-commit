@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ensure_command() {
+    if ! command -v "$1" &> /dev/null; then
+        echo "Error: Required command '$1' not found. Please install it and retry."
+        exit 1
+    fi
+}
+
+run_tests() {
+    echo "Running tests with pytest..."
+    poetry run pytest
+    echo "All tests passed."
+}
+
+run_mypy() {
+    echo "Running static type checks with mypy..."
+    poetry run mypy doteki
+    echo "Type checking passed."
+}
+
+check_format() {
+    echo "Checking code format with black..."
+    poetry run black --check doteki
+    echo "Code format check passed."
+}
+
+start_time=$(date +%s)
+
+ensure_command poetry
+run_tests
+run_mypy
+check_format
+
+end_time=$(date +%s)
+execution_time=$((end_time - start_time))
+echo "Pre-commit checks completed in $execution_time seconds."
