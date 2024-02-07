@@ -17,6 +17,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Configure PyPI token
+        run: poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+
       - name: Generate the changelog
         uses: orhun/git-cliff-action@main
         id: git-cliff
@@ -25,6 +37,10 @@ jobs:
           args: --latest --strip all
         env:
           OUTPUT: CHANGES.md
+
+      - name: Publish to PyPI
+        run: |
+          poetry publish --build
 
       - name: Create GitHub release
         run: |

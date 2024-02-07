@@ -130,6 +130,3 @@ else
 fi
 
 echo "git push && git push --tags && open ${https_url}/tags"
-
-echo "To publish on PyPI, run:"
-echo "poetry publish --build"
