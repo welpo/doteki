@@ -24,7 +24,7 @@
 
 **dōteki** makes it easy to add dynamic content to your GitHub profile leveraging customizable plugins managed through an intuitive TOML configuration file.
 
-> dōteki (動的): dynamic.
+> dōteki (動的, /<span title="/d/: 'd' in 'dye'">d</span><span title="/oː/: long 'o' as in 'goat', but held longer">oː</span><span title="/ˈ/: primary stress mark, indicating that the following syllable is pronounced with greater emphasis">ˈ</span><span title="/t/: 't' in 'sty'">t</span><span title="/e/: 'e' as in 'dress'">e</span><span title="/k/: 'k' in 'kind'">k</span><span title="/i/: 'i' in 'fleece'">i</span>/): dynamic.
 
 ## ✨ Main features
 
