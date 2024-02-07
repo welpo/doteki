@@ -70,7 +70,9 @@ Our integration systems run automated tests to guard against mistakes. To speed 
 - Run `poetry run black {file/dir}` to format your code.
 - If necessary, update the documentation (in `website/docs/`).
 
+:::tip
 You might find the [hooks in `.githooks/`](https://github.com/welpo/doteki/tree/main/.githooks) useful. To use them, run `git config core.hooksPath .githooks`.
+:::
 
 ### Conventional Commit Messages with Gitmoji
 
