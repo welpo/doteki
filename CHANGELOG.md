@@ -23,12 +23,17 @@ We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.
 ### ♻️ Refactor
 
 - *(cli)* Improve code readability - ([915f02e](https://github.com/welpo/doteki/commit/915f02ebd81d4dc152585251519ed8a55afeb287))
+- Move parse_arguments definition after its calling - ([4cbb4bd](https://github.com/welpo/doteki/commit/4cbb4bdd5e93efabbe6c274161d14fb5662124aa))
 
 ## [0.0.2](https://github.com/welpo/doteki/compare/v0.0.1..v0.0.2) - 2024-01-26
 
 ### 🐛 Bug Fixes
 
 - Add utf-8 encoding to file write operations - ([17a8584](https://github.com/welpo/doteki/commit/17a8584822c1cedaa38f6897eefebca70d7f6039))
+
+### ♻️ Refactor
+
+- *(cli)* Improve error message on missing deps - ([3367dfa](https://github.com/welpo/doteki/commit/3367dfac2ac17459d70968d727e9879f2cc52a19))
 
 ## 0.0.1 - 2024-01-19
 
