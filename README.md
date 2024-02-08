@@ -13,6 +13,8 @@
         <img src="https://img.shields.io/website?url=https%3A%2F%2Fdoteki.org&style=flat-square&label=docs&labelColor=202b2d&color=5E936C" alt="Documentation"></a>
     <a href="https://github.com/welpo/doteki/blob/main/COPYING">
         <img src="https://img.shields.io/github/license/welpo/doteki?style=flat-square&labelColor=202b2d&color=5E936C" alt="License"></a>
+    <a href="https://github.com/welpo/git-sumi">
+        <img src="https://img.shields.io/badge/clean_commits-git--sumi-0?style=flat-square&labelColor=202b2d&color=5E936C" alt="Clean commits"></a>
     <a href="https://doteki.org">
         <img src="https://img.shields.io/badge/powered_by-d%C5%8Dteki-0?style=flat-square&labelColor=202b2d&color=5E936C" alt="Powered by dōteki"></a>
 </p>
