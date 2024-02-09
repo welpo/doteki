@@ -248,7 +248,7 @@ def write_file_content(filepath: str, content: str) -> None:
 def insert_credits(global_config: dict[str, Any], readme_path: str) -> None:
     credits = global_config.get("credits", DEFAULT_CREDITS)
     readme_content = read_file_content(readme_path)
-    if credits in read_file_content(readme_path):
+    if credits in readme_content:
         return
     write_file_content(readme_path, readme_content + "\n" + credits + "\n")
 
