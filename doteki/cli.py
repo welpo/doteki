@@ -5,6 +5,7 @@ import logging
 import os
 import re
 import sys
+import tempfile
 from importlib.metadata import version
 from typing import Any
 
@@ -21,8 +22,20 @@ def main() -> None:
     )
     exit_if_file_missing(args.input)
     global_config = load_config(args.config)
-    process_sections(global_config, args.input)
-    insert_credits(global_config, args.input)
+    with tempfile.NamedTemporaryFile(
+        delete=False, mode="w+", encoding="utf-8"
+    ) as temp_file:
+        readme_content = read_file_content(args.input)
+        temp_file.write(readme_content)
+        temp_file_path = temp_file.name
+    try:
+        process_sections(global_config, temp_file_path)
+        insert_credits(global_config, temp_file_path)
+        os.replace(temp_file_path, args.input)
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        os.remove(temp_file_path)
+        sys.exit(1)
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -75,6 +88,15 @@ def load_config(config_path: str) -> dict[str, Any]:
         sys.exit(1)
 
 
+def read_file_content(filepath: str) -> str:
+    try:
+        with open(filepath, "r", encoding="utf-8") as file:
+            return file.read()
+    except IOError as e:
+        logging.error(f"An error occurred while reading {filepath}: {e}")
+        return ""
+
+
 def process_sections(global_config: dict[str, Any], readme_path: str) -> None:
     for section, section_settings in global_config["sections"].items():
         section_context = SectionContext(section, section_settings, readme_path)
@@ -120,15 +142,6 @@ def update_readme_content(
         )
 
     write_file_content(section_context.readme_path, readme_content)
-
-
-def read_file_content(filepath: str) -> str:
-    try:
-        with open(filepath, "r", encoding="utf-8") as file:
-            return file.read()
-    except IOError as e:
-        logging.error(f"An error occurred while reading {filepath}: {e}")
-        return ""
 
 
 def find_section_indices(content: str, section: str, marker_format: str) -> list[tuple]:
