@@ -473,3 +473,34 @@ def test_main_disabled_credits(tmp_path):
             main()
             updated_readme = readme_file.read_text(encoding="utf-8")
             assert updated_readme == original_readme
+
+
+def test_replace_default_credits_with_custom_credits(tmp_path):
+    # Initial setup with default credits
+    readme_file = tmp_path / "README.md"
+    config_file = tmp_path / "config.toml"
+    custom_credits = "dōteki is the best"
+    original_readme = f"<!-- mock start --><!-- mock end -->\n{DEFAULT_CREDITS}"
+    readme_file.write_text(original_readme, encoding="utf-8")
+
+    # Custom credits configuration
+    config_file.write_text(
+        f"""
+    credits = "a{custom_credits}"
+    [sections]
+    [sections.mock]
+    plugin = "current_date"
+    inline = true
+    """,
+        encoding="utf-8",
+    )
+
+    test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
+    with patch.object(sys, "argv", test_args):
+        with patch("doteki.plugins.current_date.run", return_value="2053-12-31"):
+            main()
+            updated_readme = readme_file.read_text(encoding="utf-8")
+            # Default credits should be gone.
+            print(updated_readme)
+            assert custom_credits in updated_readme
+            assert DEFAULT_CREDITS not in updated_readme
