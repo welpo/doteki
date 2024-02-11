@@ -262,7 +262,9 @@ def insert_credits(global_config: dict[str, Any], readme_path: str) -> None:
     credits = global_config.get("credits", DEFAULT_CREDITS)
     readme_content = read_file_content(readme_path)
 
-    if credits != DEFAULT_CREDITS and DEFAULT_CREDITS in readme_content:
+    if credits in readme_content:
+        return
+    elif credits != DEFAULT_CREDITS and DEFAULT_CREDITS in readme_content:
         # Replace default credits with custom ones.
         readme_content = readme_content.replace(DEFAULT_CREDITS, credits)
     elif credits not in readme_content:
