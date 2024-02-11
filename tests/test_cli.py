@@ -1,6 +1,6 @@
 import logging
 import sys
-from unittest.mock import Mock, mock_open, patch
+from unittest.mock import MagicMock, Mock, mock_open, patch
 
 import pytest
 
@@ -504,3 +504,24 @@ def test_replace_default_credits_with_custom_credits(tmp_path):
             print(updated_readme)
             assert custom_credits in updated_readme
             assert DEFAULT_CREDITS not in updated_readme
+
+
+def test_main_exception_handling(caplog, tmp_path):
+    config_path = tmp_path / "doteki.toml"
+    readme_path = tmp_path / "README.md"
+    config_path.write_text("[sections]\n", encoding="utf-8")
+    readme_path.write_text("Initial README content", encoding="utf-8")
+
+    mock_args = MagicMock(input=str(readme_path), config=str(config_path))
+
+    # Mock the main process to raise an exception.
+    with patch("doteki.cli.parse_arguments", return_value=mock_args), patch(
+        "doteki.cli.process_sections", side_effect=Exception("Test Exception")
+    ), patch("os.remove") as mock_remove, patch("sys.exit") as mock_exit:
+
+        with caplog.at_level(logging.ERROR):
+            main()
+
+    assert "An error occurred: Test Exception" in caplog.text
+    assert mock_remove.called  # Tried to remove the temporary file.
+    mock_exit.assert_called_once_with(1)
