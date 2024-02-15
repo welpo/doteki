@@ -163,6 +163,12 @@ If your plugin adds a dependency, you need to:
     all = ["requests", "feedparser", "pandas"]
     ```
 
+5. Finally, update `poetry.lock`:
+
+   ```bash
+   poetry update <dependency_name>
+   ```
+
 ## Documentation
 
 Each plugin must have a Markdown file in the `website/docs/plugins` directory. The filename must match the name of the plugin. For example, the documentation for the `current_date` plugin can be found in `website/docs/plugins/current_date.md`.
