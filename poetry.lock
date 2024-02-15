@@ -392,7 +392,7 @@ testing = ["pytest", "pytest-benchmark"]
 name = "pyfiglet"
 version = "1.0.2"
 description = "Pure-python FIGlet implementation"
-optional = false
+optional = true
 python-versions = ">=3.9"
 files = [
     {file = "pyfiglet-1.0.2-py3-none-any.whl", hash = "sha256:889b351d79c99e50a3f619c8f8e6ffdb27fd8c939fc43ecbd7559bd57d5f93ea"},
@@ -510,11 +510,12 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [extras]
-all = ["feedparser", "requests"]
+all = ["feedparser", "pyfiglet", "requests"]
 feed = ["feedparser", "requests"]
+figlet = ["pyfiglet"]
 lastfm = ["requests"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1a00ee1dce291eb658c7d1859102b8cdac86d779df60991616677c82893eab3c"
+content-hash = "b547f085367a4a065736dff67fa9fc6f442f56a4aa81089c1d340e1bc04759fc"
