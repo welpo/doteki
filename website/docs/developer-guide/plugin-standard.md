@@ -136,8 +136,13 @@ dōteki uses [Poetry](https://python-poetry.org/) to manage dependencies. The `p
 
 If your plugin adds a dependency, you need to:
 
-1. Add it to the `pyproject.toml` file. You can run `poetry add {dependency_name}` to do this.
-2. Mark it as optional. Example:
+1. Add it to the `pyproject.toml` file by using `poetry`:
+
+   ```bash
+    poetry add <dependency_name>
+    ```
+
+2. Edit `pyproject.toml` to mark it as optional. For example, if you just added `pandas`:
 
    ```toml
    [tool.poetry.dependencies]
