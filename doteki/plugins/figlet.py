@@ -10,7 +10,9 @@ def run(settings: dict[str, Any]) -> str | None:
     text = settings.get("ascii_text")
     font = settings.get("font", "standard")
     result = pyfiglet.figlet_format(text, font)
-    result = "<pre>" + result + "</pre>"
+    pre_text = "```text\n"
+    post_text = "\n```"
+    result = pre_text + result.rstrip() + post_text
     return str(result)
 
 
