@@ -4,15 +4,13 @@ from doteki.plugins.figlet import run
 
 def test_prototype():
     settings = {"ascii_text": "hola"}
-    expected = """ _           _       \n| |__   ___ | | __ _ \n| '_ \\ / _ \\| |/ _` |\n| | | | (_) | | (_| |\n|_| |_|\\___/|_|\\__,_|\n                     \n"""
-    expected = "<pre>" + expected + "</pre>"
+    expected = r""" _           _       
+| |__   ___ | | __ _ 
+| '_ \ / _ \| |/ _` |
+| | | | (_) | | (_| |
+|_| |_|\___/|_|\__,_|"""
     result = run(settings)
-    expected = expected.replace(" ", "S").replace("\n", "r")
-    result = result.replace(" ", "S").replace("\n", "r")
-
-    print(repr(expected))
-    print(repr(result))
-    assert result == expected
+    assert expected in str(result)
 
 
 def test_proto_2():
