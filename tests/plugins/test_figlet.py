@@ -36,7 +36,7 @@ def test_proto_2():
     with caplog.at_level(logging.ERROR):
         result = run(settings)
     assert result is None
-    assert "No settings provided for the Figlet plugin" in caplog.text"""
+    assert "No settings provided for the FIGlet plugin" in caplog.text"""
 
 
 # If no text, result is none
@@ -47,7 +47,7 @@ def test_empty_text(caplog):
     with caplog.at_level(logging.ERROR):
         result = run(settings)
     assert result is None
-    assert "No text provided for the Figlet plugin" in caplog.text
+    assert "No text provided for the FIGlet plugin" in caplog.text
 
 
 # If invalid font, result is none
@@ -58,7 +58,7 @@ def test_invalid_font(caplog):
     with caplog.at_level(logging.ERROR):
         result = run(settings)
     assert result is None
-    assert "Invalid font for the Figlet plugin" in caplog.text
+    assert "Invalid font for the FIGlet plugin" in caplog.text
 
 
 def test_int_text():

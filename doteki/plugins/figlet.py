@@ -25,13 +25,13 @@ def validate_settings(settings: dict[str, Any]) -> bool:
 
     # Check required setting.
     if "ascii_text" not in settings:
-        errors.append("No text provided for the Figlet plugin")
+        errors.append("No text provided for the FIGlet plugin")
 
     try:
         pyfiglet.figlet_format("test", font)
 
     except pyfiglet.FontNotFound:
-        errors.append("Invalid font for the Figlet plugin")
+        errors.append("Invalid font for the FIGlet plugin")
 
     if errors:
         for error in errors:
