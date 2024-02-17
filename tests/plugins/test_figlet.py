@@ -61,3 +61,16 @@ def test_invalid_font(caplog):
         result = run(settings)
     assert result is None
     assert "Invalid font for the Figlet plugin" in caplog.text
+
+
+def test_int_text():
+    settings = {"ascii_text": 42, "font": "standard"}
+
+    expected = r""" _  _  ____  
+| || ||___ \ 
+| || |_ __) |
+|__   _/ __/ 
+   |_||_____|"""
+    result = run(settings)
+
+    assert expected in str(result)
