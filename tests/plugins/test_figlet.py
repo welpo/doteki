@@ -22,8 +22,7 @@ def test_empty_text(caplog):
     assert "No text provided for the FIGlet plugin" in caplog.text
 
 
-# If invalid font, result is none
-def test_invalid_font(caplog):
+def test_invalid_font_returns_none(caplog):
     settings = {"ascii_text": "hola", "font": "invalid_font"}
     with caplog.at_level(logging.ERROR):
         result = run(settings)
