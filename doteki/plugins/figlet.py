@@ -27,7 +27,6 @@ def run(settings: dict[str, Any]) -> str | None:
 
 def validate_settings(settings: dict[str, Any]) -> bool:
 
-    text = settings.get("ascii_text")
     font = settings.get("font", "standard")
 
     errors = []
