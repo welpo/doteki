@@ -2,4 +2,3 @@ __pycache__/
 *coverage*
 .vscode/
 dist/
-*bat
