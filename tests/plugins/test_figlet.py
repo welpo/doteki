@@ -1,8 +1,8 @@
 import logging
-from doteki.plugins.figlet import run
+from doteki.plugins.figlet import run, trim_leading_and_trailing_empty_lines
 
 
-def test_prototype():
+def test_default_font():
     settings = {"ascii_text": "hola"}
     expected = r""" _           _       
 | |__   ___ | | __ _ 
@@ -13,23 +13,8 @@ def test_prototype():
     assert expected in str(result)
 
 
-# If no parameters, result is none
-# Test is superseeded by test_empty_text
-"""def test_empty_settings(caplog):
-
-    settings = {}
-    
-    with caplog.at_level(logging.ERROR):
-        result = run(settings)
-    assert result is None
-    assert "No settings provided for the FIGlet plugin" in caplog.text"""
-
-
-# If no text, result is none
 def test_empty_text(caplog):
-
     settings = {"font": "standard"}
-
     with caplog.at_level(logging.ERROR):
         result = run(settings)
     assert result is None
@@ -38,9 +23,7 @@ def test_empty_text(caplog):
 
 # If invalid font, result is none
 def test_invalid_font(caplog):
-
     settings = {"ascii_text": "hola", "font": "invalid_font"}
-
     with caplog.at_level(logging.ERROR):
         result = run(settings)
     assert result is None
@@ -49,12 +32,10 @@ def test_invalid_font(caplog):
 
 def test_int_text():
     settings = {"ascii_text": 42, "font": "standard"}
-
     expected = r""" _  _  ____  
 | || ||___ \ 
 | || |_ __) |
 |__   _/ __/ 
    |_||_____|"""
     result = run(settings)
-
     assert expected in str(result)
