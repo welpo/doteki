@@ -8,6 +8,7 @@ def run(settings: dict[str, Any]) -> str | None:
     if not validate_settings(settings):
         return None
     text = settings.get("ascii_text")
+    text = str(text)  ## In case is int number
     font = settings.get("font", "standard")
     result = pyfiglet.figlet_format(text, font)
     pre_text = "```text\n"
