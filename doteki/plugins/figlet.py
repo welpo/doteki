@@ -10,7 +10,15 @@ def run(settings: dict[str, Any]) -> str | None:
     text = settings.get("ascii_text")
     text = str(text)  ## In case is int number
     font = settings.get("font", "standard")
-    result = pyfiglet.figlet_format(text, font)
+    result = ""
+
+    try:
+        result = pyfiglet.figlet_format(text, font)
+
+    except pyfiglet.FontNotFound:
+        logging.error("Invalid font for the FIGlet plugin")
+        return None
+
     pre_text = "```text\n"
     post_text = "\n```"
     result = pre_text + result.rstrip() + post_text
@@ -27,12 +35,6 @@ def validate_settings(settings: dict[str, Any]) -> bool:
     # Check required setting.
     if "ascii_text" not in settings:
         errors.append("No text provided for the FIGlet plugin")
-
-    try:
-        pyfiglet.figlet_format("test", font)
-
-    except pyfiglet.FontNotFound:
-        errors.append("Invalid font for the FIGlet plugin")
 
     if errors:
         for error in errors:
