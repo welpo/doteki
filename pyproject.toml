@@ -29,6 +29,7 @@ python = "^3.11"
 # Optional dependencies for plugins.
 feedparser = { version = "^6.0", optional = true }
 requests = { version = "^2.28", optional = true }
+pyfiglet = { version = "^1.0.2", optional = true}
 
 
 [tool.poetry.extras]
@@ -36,9 +37,11 @@ requests = { version = "^2.28", optional = true }
 all = [ # This enables `pip install doteki[all]`. Should contain all dependencies below.
     "requests",
     "feedparser",
+    "pyfiglet",
 ]
 lastfm = ["requests"]
 feed = ["requests", "feedparser"]
+figlet = ["pyfiglet"]
 
 [build-system]
 requires = ["poetry-core"]

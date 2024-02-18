@@ -389,6 +389,17 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "pyfiglet"
+version = "1.0.2"
+description = "Pure-python FIGlet implementation"
+optional = true
+python-versions = ">=3.9"
+files = [
+    {file = "pyfiglet-1.0.2-py3-none-any.whl", hash = "sha256:889b351d79c99e50a3f619c8f8e6ffdb27fd8c939fc43ecbd7559bd57d5f93ea"},
+    {file = "pyfiglet-1.0.2.tar.gz", hash = "sha256:758788018ab8faaddc0984e1ea05ff330d3c64be663c513cc1f105f6a3066dab"},
+]
+
+[[package]]
 name = "pytest"
 version = "8.0.1"
 description = "pytest: simple powerful testing with Python"
@@ -499,11 +510,12 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [extras]
-all = ["feedparser", "requests"]
+all = ["feedparser", "pyfiglet", "requests"]
 feed = ["feedparser", "requests"]
+figlet = ["pyfiglet"]
 lastfm = ["requests"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "feb00fe505fc34afb577ba582ed9ca0b6a16aa9783ff188e66355bd5dda8e2a6"
+content-hash = "b547f085367a4a065736dff67fa9fc6f442f56a4aa81089c1d340e1bc04759fc"
