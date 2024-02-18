@@ -1,4 +1,5 @@
 import logging
+import pytest
 from doteki.plugins.figlet import run, trim_leading_and_trailing_empty_lines
 
 
@@ -39,3 +40,22 @@ def test_int_text():
    |_||_____|"""
     result = run(settings)
     assert expected in str(result)
+
+
+@pytest.mark.parametrize(
+    "lines, expected",
+    [
+        # Removes leading and trailing empty lines.
+        (["", " ", "Hello", "World", "", " "], ["Hello", "World"]),
+        # Do not remove empty lines in the middle.
+        (["Hello", "", " ", "World"], ["Hello", "", " ", "World"]),
+        # Leave non-empty lines as is.
+        (["Hello", "World"], ["Hello", "World"]),
+        # If there are only empty lines, return an empty list.
+        (["", " ", "   "], []),
+        # If no lines are provided, return an empty list.
+        ([], []),
+    ],
+)
+def test_trim_leading_and_trailing_empty_lines(lines, expected):
+    assert trim_leading_and_trailing_empty_lines(lines) == expected

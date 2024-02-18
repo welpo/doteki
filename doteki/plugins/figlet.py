@@ -16,6 +16,10 @@ def run(settings: dict[str, Any]) -> str | None:
         logging.error("Invalid font for the FIGlet plugin")
         return None
 
+    result_lines = result.splitlines()
+    trimmed_result_lines = trim_leading_and_trailing_empty_lines(result_lines)
+    result = "\n".join(trimmed_result_lines)
+
     pre_text = "```text\n"
     post_text = "\n```"
     result = pre_text + result.rstrip() + post_text
@@ -29,3 +33,15 @@ def validate_settings(settings: dict[str, Any]) -> bool:
         return False
 
     return True
+
+
+def trim_leading_and_trailing_empty_lines(lines: list[str]) -> list[str]:
+    # Leading lines.
+    while lines and lines[0].strip() == "":
+        lines.pop(0)
+
+    # Trailing lines.
+    while lines and lines[-1].strip() == "":
+        lines.pop()
+
+    return lines
