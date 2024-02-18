@@ -27,7 +27,6 @@ def run(settings: dict[str, Any]) -> str | None:
 
 
 def validate_settings(settings: dict[str, Any]) -> bool:
-    # Check required setting.
     if "ascii_text" not in settings:
         logging.error("No text provided for the FIGlet plugin")
         return False
