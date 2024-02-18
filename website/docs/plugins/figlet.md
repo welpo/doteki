@@ -1,17 +1,17 @@
 # FIGlet Plugin
 
-Display text with customizable ASCII art using FIGlet fonts. If no font is provided, it defaults to the standard output. Useful for adding decorative displays in your documents or applications.
+Display text with customizable ASCII art using FIGlet fonts.
 
 ## Configuration
 
 The FIGlet plugin can be configured with the following parameters:
 
 - `text`: Text to be rendered in ASCII font.
-- `font`: Specify the FIGlet font to use for rendering the text. Default is standard ASCII font.
+- `font`: FIGlet font to use. Defaults to `standard`.
 
 ## Usage
 
-Here's an example with a custom font:
+Here's an example configuration:
 
 ```toml title="doteki.toml"
 [sections.ascii_art]
@@ -20,7 +20,7 @@ ascii_text = "text"
 font = "larry3d"
 ```
 
-This configuration will render the following:
+This will render the following:
 
 ```text
  __                   __      
