@@ -50,7 +50,8 @@ jobs:
             --title "Release ${{ github.ref_name }}" \
             --notes "$(git-cliff --latest --strip all)"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # For git-cliff
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # For `gh`
 
       # Update doteki-action.
       - name: Clone doteki-action
