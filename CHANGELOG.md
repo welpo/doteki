@@ -4,6 +4,37 @@ Welcome to the changelog for dōteki. This document aims to provide a comprehens
 
 We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.MINOR.PATCH. Major version changes involve significant (breaking) changes, minor versions introduce features and improvements in a backward compatible manner, and patch versions are for bug fixes and minor tweaks.
 
+## [0.0.8](https://github.com/welpo/doteki/compare/v0.0.7..v0.0.8) - 2024-02-20
+
+### ✨ Features
+
+- *(credits)* Replace default credits with customs ([aecd58d](https://github.com/welpo/doteki/commit/aecd58d9ae1a51d27511245ef25a477a0ae5d05e)) by [@welpo](https://github.com/welpo)
+- *(plugins)* Add FIGlet plugin ([#12](https://github.com/welpo/doteki/issues/12)) by [@bcignasi](https://github.com/bcignasi) and [@welpo](https://github.com/welpo)
+
+### 📝 Documentation
+
+- *(website)* Increase link visibility on light mode ([d2c8a59](https://github.com/welpo/doteki/commit/d2c8a59d9f83cfcb8dadc4dfd9e13eb24054b191)) by [@welpo](https://github.com/welpo)
+- *(website)* Add missing step to add dependencies ([d8d47cb](https://github.com/welpo/doteki/commit/d8d47cb06f2a29a77ec238bba2d891b6847914aa)) by [@welpo](https://github.com/welpo)
+- *(website)* Clarify adding plugin dependencies ([d3d0663](https://github.com/welpo/doteki/commit/d3d066327318e83d46035f2b611bad1fc321d64b)) by [@welpo](https://github.com/welpo)
+
+### ♻️ Refactor
+
+- *(cli)* Skip re-write if credits present ([cb1b2aa](https://github.com/welpo/doteki/commit/cb1b2aae66ec4f8c6ca40d0c66f8dc95f9bef579)) by [@welpo](https://github.com/welpo)
+
+### ✅ Testing
+
+- Cover main exception with temp removal ([647cd60](https://github.com/welpo/doteki/commit/647cd60cee34262c65a7f57f76e53833d61582cf)) by [@welpo](https://github.com/welpo)
+
+### 🔧 Miscellaneous tasks
+
+- *(git-sumi)* Improve emoji matching ([46c6fa9](https://github.com/welpo/doteki/commit/46c6fa941e0b11db9764cd057f7705f06aa30c4e)) by [@welpo](https://github.com/welpo)
+- *(release)* Update CHANGELOG format ([be1f7b1](https://github.com/welpo/doteki/commit/be1f7b10175ed5eedc69fa3f8788d48f6ceaea73)) by [@welpo](https://github.com/welpo)
+- *(renovate)* Move config file ([900992a](https://github.com/welpo/doteki/commit/900992afdb1cbcd0e9ea25d6824681fd74323605)) by [@welpo](https://github.com/welpo)
+
+### 👥 New contributors
+
+🫶 [@bcignasi](https://github.com/bcignasi) made their first contribution in [#12](https://github.com/welpo/doteki/pull/12)
+
 ## [0.0.7](https://github.com/welpo/doteki/compare/v0.0.3..v0.0.7) - 2024-02-10
 
 ### 🐛 Bug fixes
