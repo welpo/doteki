@@ -122,7 +122,7 @@ To generate a code coverage report, run:
 poetry run pytest --cov=doteki
 ```
 
-For VSCode users, the [Coverage Gutters](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters) extension can highlight lines not covered by tests. This extension needs a a coverage report; generate it with:
+For VSCode users, the [Coverage Gutters](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters) extension can highlight lines not covered by tests. This extension needs a coverage report; generate it with:
 
 ```bash
 poetry run pytest --cov=doteki --cov-report xml
