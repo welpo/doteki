@@ -297,6 +297,9 @@ MOCK_FEED_WITH_MISSING_DATA = b"""
 """
 
 
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
 @patch("requests.get")
 def test_feed_with_missing_data(mock_get, caplog):
     # Mock response with the feed having an entry missing a title
@@ -353,6 +356,9 @@ MOCK_FEED_MISSING_DATE = b"""
 """
 
 
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
 @patch("requests.get")
 def test_feed_missing_date(mock_get, caplog):
     mock_response = MagicMock()
@@ -386,3 +392,220 @@ def test_n_one_returns_str(mock_get):
     expected_output = "[Entry w/ date](http://example.com/entry1)"
     assert result == expected_output
     assert isinstance(result, str)
+
+
+@patch("requests.get")
+def test_sort_by_published_date(mock_get):
+    mock_response = MagicMock()
+    mock_response.content = MOCK_ATOM_FEED_XML
+    mock_response.raise_for_status = MagicMock()
+    mock_get.return_value = mock_response
+
+    # Test ascending order
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "ascending",
+        "sort_field": "published",
+    }
+    result = run(settings)
+    assert result[0].startswith("[Artificial Intelligence Ethics")  # Oldest
+    assert result[-1].startswith("[Understanding Machine Learning")  # Newest
+
+    # Test descending order
+    settings["sort_order"] = "descending"
+    result = run(settings)
+    assert result[0].startswith("[Understanding Machine Learning")  # Newest
+    assert result[-1].startswith("[Artificial Intelligence Ethics")  # Oldest
+
+
+@patch("requests.get")
+def test_sort_by_updated_date(mock_get):
+    mock_response = MagicMock()
+    mock_response.content = MOCK_ATOM_FEED_XML
+    mock_response.raise_for_status = MagicMock()
+    mock_get.return_value = mock_response
+
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "descending",
+        "sort_field": "updated",
+    }
+    result = run(settings)
+    assert result[0].startswith("[Understanding Machine Learning")  # Last updated
+    assert result[-1].startswith("[Artificial Intelligence Ethics")  # First updated
+
+
+MOCK_FEED_MIXED_DATES = b"""
+<feed>
+    <entry>
+        <title>Entry 1</title>
+        <link href="http://example.com/entry1" />
+        <published>2024-01-01T00:00:00Z</published>
+        <updated>2024-01-02T00:00:00Z</updated>
+    </entry>
+    <entry>
+        <title>Entry 2</title>
+        <link href="http://example.com/entry2" />
+        <published>2024-01-02T00:00:00Z</published>
+    </entry>
+    <entry>
+        <title>Entry 3</title>
+        <link href="http://example.com/entry3" />
+        <published>2024-01-03T00:00:00Z</published>
+        <updated>2024-01-01T00:00:00Z</updated>
+    </entry>
+</feed>
+"""
+
+
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
+@patch("requests.get")
+def test_sort_with_mixed_dates(mock_get):
+    mock_response = MagicMock()
+    mock_response.content = MOCK_FEED_MIXED_DATES
+    mock_response.raise_for_status = MagicMock()
+    mock_get.return_value = mock_response
+
+    # Test sorting by updated - the order should be:
+    # Entry 3 (Jan 1), Entry 1 (Jan 2), Entry 2 (falls back to published date Jan 2)
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "ascending",
+        "sort_field": "updated",
+    }
+    result = run(settings)
+
+    assert len(result) == 3
+    assert result[0].startswith("[Entry 3")  # Updated Jan 1
+    assert result[1].startswith("[Entry 1")  # Updated Jan 2
+    # Entry 2 should be last, using its published date as fallback
+    assert result[2].startswith("[Entry 2")
+
+
+def test_invalid_sort_parameters(caplog):
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "invalid",
+        "sort_field": "published",
+    }
+    with caplog.at_level(logging.ERROR):
+        result = run(settings)
+    assert result is None
+    assert "Invalid sort_order: 'invalid'" in caplog.text
+
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "ascending",
+        "sort_field": "invalid",
+    }
+    with caplog.at_level(logging.ERROR):
+        result = run(settings)
+    assert result is None
+    assert "Invalid sort_field: 'invalid'" in caplog.text
+
+
+MOCK_FEED_UPDATED_FALLBACK = b"""
+<feed>
+    <entry>
+        <title>Entry 1</title>
+        <link href="http://example.com/entry1" />
+        <published>2024-01-01T00:00:00Z</published>
+        <updated>2024-01-03T00:00:00Z</updated>
+    </entry>
+    <entry>
+        <title>Entry 2</title>
+        <link href="http://example.com/entry2" />
+        <published>2024-01-02T00:00:00Z</published>
+    </entry>
+    <entry>
+        <title>Entry 3</title>
+        <link href="http://example.com/entry3" />
+        <published>2024-01-03T00:00:00Z</published>
+        <updated>2024-01-01T00:00:00Z</updated>
+    </entry>
+</feed>
+"""
+
+
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
+@patch("requests.get")
+def test_sort_updated_fallback(mock_get):
+    mock_response = MagicMock()
+    mock_response.content = MOCK_FEED_UPDATED_FALLBACK
+    mock_response.raise_for_status = MagicMock()
+    mock_get.return_value = mock_response
+
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "ascending",
+        "sort_field": "updated",
+    }
+    result = run(settings)
+
+    # In ascending order:
+    # Entry 3 (updated Jan 1)
+    # Entry 2 (no updated, published Jan 2)
+    # Entry 1 (updated Jan 3)
+    assert len(result) == 3
+    assert result[0].startswith("[Entry 3")  # Updated earliest
+    assert result[1].startswith("[Entry 2")  # Uses published date as fallback
+    assert result[2].startswith("[Entry 1")  # Updated latest
+
+    # Test descending order too
+    settings["sort_order"] = "descending"
+    result = run(settings)
+    assert result[0].startswith("[Entry 1")  # Updated latest
+    assert result[1].startswith("[Entry 2")  # Uses published date as fallback
+    assert result[2].startswith("[Entry 3")  # Updated earliest
+
+
+MOCK_FEED_NO_DATES = b"""
+<feed>
+    <entry>
+        <title>Entry 1</title>
+        <link href="http://example.com/entry1" />
+        <published>2024-01-01T00:00:00Z</published>
+    </entry>
+    <entry>
+        <title>Entry 2</title>
+        <link href="http://example.com/entry2" />
+    </entry>
+    <entry>
+        <title>Entry 3</title>
+        <link href="http://example.com/entry3" />
+        <published>2024-01-03T00:00:00Z</published>
+    </entry>
+</feed>
+"""
+
+
+@patch("requests.get")
+def test_sort_with_missing_all_dates(mock_get, caplog):
+    mock_response = MagicMock()
+    mock_response.content = MOCK_FEED_NO_DATES
+    mock_response.raise_for_status = MagicMock()
+    mock_get.return_value = mock_response
+
+    # Test ascending order - dateless entries should be at the end.
+    settings = {
+        "url": "https://example.com/atom.xml",
+        "sort_order": "ascending",
+        "sort_field": "published",
+    }
+    result = run(settings)
+
+    assert len(result) == 3
+    assert result[0].startswith("[Entry 1")  # Jan 1
+    assert result[1].startswith("[Entry 3")  # Jan 3
+    assert result[2].startswith("[Entry 2")  # No date -> should be last in ascending
+
+    # Test descending order - dateless entries should still be at the end.
+    settings["sort_order"] = "descending"
+    result = run(settings)
+    assert result[0].startswith("[Entry 3")  # Jan 3
+    assert result[1].startswith("[Entry 1")  # Jan 1
+    assert result[2].startswith("[Entry 2")  # No date -> should be last in descending
