@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doteki"
-version = "0.0.8"  # Managed by 'release' script.
+version = "0.0.9"  # Managed by 'release' script.
 description = "Easily add dynamic content to your GitHub profile"
 authors = ["Óscar Fernández <osc@osc.garden>"]
 license = "GPL-3.0-or-later"
