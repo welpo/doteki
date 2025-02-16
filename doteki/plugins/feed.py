@@ -9,6 +9,7 @@ DEFAULT_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_N = 5
 DEFAULT_SEPARATOR = "·"
 DEFAULT_SORT_FIELD = "published"
+DEFAULT_SORT_ORDER = "descending"  # Only used if sort_field is set.
 
 
 def run(settings: dict[str, Any]) -> str | list[str] | None:
@@ -43,8 +44,9 @@ def run(settings: dict[str, Any]) -> str | list[str] | None:
     sort_field = settings.get("sort_field", DEFAULT_SORT_FIELD)
 
     entries = feed.entries
-    if "sort_order" in settings:
-        entries = sort_entries(entries, sort_field, settings["sort_order"])
+    if sort_field := settings.get("sort_field"):
+        sort_order = settings.get("sort_order", DEFAULT_SORT_ORDER)
+        entries = sort_entries(entries, sort_field, sort_order)
 
     entries = entries[:n]
     formatted_entries = [
