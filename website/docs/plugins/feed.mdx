@@ -17,8 +17,10 @@ The Feed plugin can be customized with several settings:
 - `url` (required): The URL of the RSS or Atom feed.
 - `n`: The number of feed items to display. Default: `5`.
 - `date_format`: The format for displaying dates. Default: `"%Y-%m-%d"`, which displays dates as `YYYY-MM-DD`.
-- `show_date`: A boolean to indicate whether to show the publication date of each feed item. Default: `False`.
+- `show_date`: A boolean to indicate whether to show the publication/update date of each feed item. Default: `False`.
 - `separator`: The separator character to use when displaying dates. Default: `"·"`.
+- `sort_order`: Optional sorting direction: `"ascending"` or `"descending"`. Default: No sorting (keeps feed order).
+- `sort_field`: Which date field to sort by: `"published"` or `"updated"`. Default: `"published"`. If sorting by `"updated"` and an entry lacks an update date, falls back to using its published date.
 
 ## Usage
 
