@@ -297,6 +297,9 @@ MOCK_FEED_WITH_MISSING_DATA = b"""
 """
 
 
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
 @patch("requests.get")
 def test_feed_with_missing_data(mock_get, caplog):
     # Mock response with the feed having an entry missing a title
@@ -353,6 +356,9 @@ MOCK_FEED_MISSING_DATE = b"""
 """
 
 
+@pytest.mark.filterwarnings(
+    "ignore:To avoid breaking existing software:DeprecationWarning"
+)
 @patch("requests.get")
 def test_feed_missing_date(mock_get, caplog):
     mock_response = MagicMock()
