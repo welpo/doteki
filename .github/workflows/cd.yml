@@ -59,6 +59,7 @@ jobs:
         with:
           repository: 'welpo/doteki-action'
           fetch-depth: 0
+          submodules: 'true'
           token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
           path: 'doteki-action'
 
@@ -72,7 +73,7 @@ jobs:
       - name: Run release script in doteki-action
         run: |
           cd doteki-action
-          bash release ${{ github.ref_name }}
+          bash scripts/release/release ${{ github.ref_name }}
 
       - name: Push changes and tags to doteki-action
         run: |
