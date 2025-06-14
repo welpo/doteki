@@ -225,10 +225,11 @@ preset_functions = {
 def format_plugin_output(plugin_output: Any, settings: dict[str, Any]) -> str:
     prepend_text = settings.get("prepend_text", "")
     append_text = settings.get("append_text", "")
-    preset = settings.get("preset", None)
+    preset = settings.get("preset")
     if isinstance(plugin_output, list):
         plugin_output = list(map(str, plugin_output))
-        format_function = preset_functions.get(preset, format_bullet_list)
+        preset_key = preset if isinstance(preset, str) else ""
+        format_function = preset_functions.get(preset_key, format_bullet_list)
         formatted_output = format_function(plugin_output)
     else:
         formatted_output = str(plugin_output)
