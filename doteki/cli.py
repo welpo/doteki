@@ -24,7 +24,12 @@ def main() -> None:
     exit_if_file_missing(args.input)
     global_config = load_config(args.config)
     with tempfile.NamedTemporaryFile(
-        delete=False, mode="w+", encoding="utf-8"
+        delete=False,
+        mode="w+",
+        encoding="utf-8",
+        dir=os.path.dirname(os.path.abspath(args.input)),
+        prefix=f".{os.path.basename(args.input)}.",
+        suffix=".tmp",
     ) as temp_file:
         readme_content = read_file_content(args.input)
         temp_file.write(readme_content)
