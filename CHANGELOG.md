@@ -4,6 +4,17 @@ Welcome to the changelog for dōteki. This document aims to provide a comprehens
 
 We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.MINOR.PATCH. Major version changes involve significant (breaking) changes, minor versions introduce features and improvements in a backward compatible manner, and patch versions are for bug fixes and minor tweaks.
 
+## [0.0.10](https://github.com/welpo/doteki/compare/v0.0.9..v0.0.10) - 2026-10-22
+
+### 🐛 Bug fixes
+
+- Create temp file in README directory ([3f5ceb3](https://github.com/welpo/doteki/commit/3f5ceb3d73cf59c7883cece3e8fc43516f259d73)) by [@welpo](https://github.com/welpo)
+- Preserve README file permissions ([445ceca](https://github.com/welpo/doteki/commit/445ceca825b59ea2c46adb318b5d443117ebf9cd)) by [@welpo](https://github.com/welpo)
+
+### 🔧 Miscellaneous tasks
+
+- *(CI)* Fix release script processing ([9fa0340](https://github.com/welpo/doteki/commit/9fa0340dbe82bc42b58834d0e1c233ea5e911e3a)) by [@welpo](https://github.com/welpo)
+
 ## [0.0.9](https://github.com/welpo/doteki/compare/v0.0.8..v0.0.9) - 2025-02-16
 
 ### ✨ Features
@@ -119,7 +130,7 @@ We use Semantic Versioning (SemVer) for our version numbers, formatted as MAJOR.
 
 ### 👥 New contributors
 
-🫶 [@renovate](https://github.com/renovate)[bot] made their first contribution in [#9](https://github.com/welpo/doteki/pull/9)
+🫶 @renovate[bot] made their first contribution in [#9](https://github.com/welpo/doteki/pull/9)
 
 ## [0.0.2](https://github.com/welpo/doteki/compare/v0.0.1..v0.0.2) - 2024-01-26
 
