@@ -4,6 +4,7 @@ import importlib
 import logging
 import os
 import re
+import shutil
 import sys
 import tempfile
 from importlib.metadata import version
@@ -31,6 +32,7 @@ def main() -> None:
     try:
         process_sections(global_config, temp_file_path)
         insert_credits(global_config, temp_file_path)
+        shutil.copymode(args.input, temp_file_path)
         os.replace(temp_file_path, args.input)
     except Exception as e:
         logging.error(f"An error occurred: {e}")

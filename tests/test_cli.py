@@ -1,4 +1,5 @@
 import logging
+import stat
 import sys
 from unittest.mock import MagicMock, Mock, mock_open, patch
 
@@ -504,6 +505,24 @@ def test_replace_default_credits_with_custom_credits(tmp_path):
             print(updated_readme)
             assert custom_credits in updated_readme
             assert DEFAULT_CREDITS not in updated_readme
+
+
+def test_main_preserves_readme_permissions(tmp_path):
+    readme_file = tmp_path / "README.md"
+    config_file = tmp_path / "config.toml"
+    readme_file.write_text("<!-- mock start --><!-- mock end -->", encoding="utf-8")
+    readme_file.chmod(0o644)
+    config_file.write_text(
+        '[sections]\n[sections.mock]\nplugin = "current_date"\n', encoding="utf-8"
+    )
+
+    test_args = ["doteki", "-c", str(config_file), "-i", str(readme_file)]
+    with patch.object(sys, "argv", test_args), patch(
+        "doteki.plugins.current_date.run", return_value="2053-12-31"
+    ):
+        main()
+
+    assert stat.S_IMODE(readme_file.stat().st_mode) == 0o644
 
 
 def test_main_exception_handling(caplog, tmp_path):
